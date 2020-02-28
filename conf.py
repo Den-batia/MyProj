@@ -13,3 +13,4 @@ sell_list = "https://localbitcoins.net/ru/buy-bitcoins-online/byn/"
 url = sell_list
 proxy_logpas = '//user39773:rdwa08@'
 url2 = 'https://httpbin.org/ip'
+time_sleep = 0

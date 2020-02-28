@@ -5,7 +5,6 @@ import re
 from concurrent import futures
 import time
 
-time_sleep = 0
 
 class Tm:
 
@@ -26,7 +25,7 @@ class Tm:
                 self.r.append(float(x[t[0]:t[1]].replace(',', '')))
             self.r.sort()
             # t = re.search(r'\d{2}\D\d{3}\D\d{2}', self.r[0])
-            time_sleep = (time_sleep + time) / 2
+            conf.time_sleep = (conf.time_sleep + time) / 2
 
     def rr(self):
         with self.lock:
@@ -40,5 +39,5 @@ if __name__ == '__main__':
         while True:
             for pr in conf.proxy:
                 pool.submit(threads_methods.start, pr, tm)
-                time.sleep(time_sleep/3)
+                time.sleep(conf.time_sleep/3)
 
