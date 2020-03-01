@@ -1,6 +1,7 @@
 from datetime import *
 import requests
 import time
+import threading
 import conf
 import api
 import API_keys
@@ -27,15 +28,18 @@ def start1(tm):
         time.sleep(0.3)
 
 
+    
 def first_mess():
+    conn = api.hmac(API_keys.hmac_key, API_keys.hmac_secret)
+    n = None
     while True:
-        conn = api.hmac(API_keys.hmac_key, API_keys.hmac_secret)
-        n = conn.call('GET', '/api/notifications/').json()['data']
+        try:
+            n = conn.call('GET', '/api/notifications/').json()['data']
+        except Exception as e:
+            print(e)
 
         for i, e in reversed(list(enumerate(n))):
-
             if e['read'] == False:
-
                 s = e['msg']  # тело сообщения
                 d = str(e['id'])  # id сообщения
                 d1 = str('/api/notifications/mark_as_read/' + d + '/')
@@ -44,15 +48,15 @@ def first_mess():
 
                 # Mess_2 = 'Contact #' + k + ' payment marked complete'
 
-                if 'You have a new offer' in s:
+                if 'Вы получили новое предложение' in s:
                     print('есть сообщение!')
-                '''
-                print('начинаем процесс отправки реквезитов!!!')
-                conn.call('POST', k1, conf.MyMess).json()
-                conn.call('POST', d1).json()
-                print('\t реквезиты отправлены.\n')
-                # logging.info('Реквизиты отправлены. ID сделки: ' + k)
-                continue
-                '''
+                    '''
+                    print('начинаем процесс отправки реквезитов!!!')
+                    conn.call('POST', k1, conf.MyMess).json()
+                    conn.call('POST', d1).json()
+                    print('\t реквезиты отправлены.\n')
+                    # logging.info('Реквизиты отправлены. ID сделки: ' + k)
+                    continue
+                    '''
         time.sleep(3)
         print('идем далше')
