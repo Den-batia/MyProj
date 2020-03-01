@@ -1,0 +1,3 @@
+hmac_key = "148971a0086e905de49977027869bd0f"
+hmac_secret = "c07c9b146bdceee8701ce21a277bf2c17dc6c1724e5c617877bfdef44b7516bc"
+

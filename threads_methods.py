@@ -2,9 +2,10 @@ from datetime import *
 import requests
 import time
 import conf
+import api
+import API_keys
 
 def start(proxy, tm):
-
     t_1 = datetime.now()
     s = requests.Session()
     s.proxies = {'https': conf.proxy_logpas + proxy}
@@ -14,8 +15,9 @@ def start(proxy, tm):
     time = t_2 - t_1
     tm.a(time.microseconds / 1000000, r)
 
-def start1(tm):
 
+
+def start1(tm):
     while True:
         r = dict.copy(tm.rr())
         if r is None:
@@ -23,3 +25,34 @@ def start1(tm):
         else:
             print(r, end='\n')
         time.sleep(0.3)
+
+
+def first_mess():
+    while True:
+        conn = api.hmac(API_keys.hmac_key, API_keys.hmac_secret)
+        n = conn.call('GET', '/api/notifications/').json()['data']
+
+        for i, e in reversed(list(enumerate(n))):
+
+            if e['read'] == False:
+
+                s = e['msg']  # тело сообщения
+                d = str(e['id'])  # id сообщения
+                d1 = str('/api/notifications/mark_as_read/' + d + '/')
+                k = str(e['contact_id'])  # id сделки
+                k1 = str('/api/contact_message_post/' + k + '/')
+
+                # Mess_2 = 'Contact #' + k + ' payment marked complete'
+
+                if 'You have a new offer' in s:
+                    print('есть сообщение!')
+                '''
+                print('начинаем процесс отправки реквезитов!!!')
+                conn.call('POST', k1, conf.MyMess).json()
+                conn.call('POST', d1).json()
+                print('\t реквезиты отправлены.\n')
+                # logging.info('Реквизиты отправлены. ID сделки: ' + k)
+                continue
+                '''
+        time.sleep(3)
+        print('идем далше')

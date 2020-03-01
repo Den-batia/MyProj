@@ -18,6 +18,9 @@ class Tm:
             list_price = re.findall(r'<td class="column-price">\s*\W*(\d{2}\D\d{3}\D\d{2})', r)
             list_names = re.findall(r'<a href="/accounts/profile/(\w*)', r)
             self.r = {list_names[name]: str(list_price[name]).replace(',', '') for name in range(len(list_price))}
+            list_price.clear()
+            list_names.clear()
+
             conf.time_sleep = (conf.time_sleep + time) / 2
 
     def rr(self):

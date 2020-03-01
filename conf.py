@@ -9,8 +9,17 @@ proxy = ['193.111.152.224:4734', '193.111.152.95:4734', '193.111.152.122:4734',
          '193.111.152.8:4734', '193.111.152.89:4734', '193.111.152.186:4734',
          '193.111.152.38:4734', '193.111.152.128:4734']
 
+list_ignore = ["Scrooge_girl", "gomelpribory", "Andrei_prime", "mybitok",
+               "Divbit", "liondell", "Yoo2", "kiril360", "Mikki666",
+               "sonitona", "Nici13131313", "semo93799921",
+               "freemanlife0", "Dilet", "unclerizo",
+               "Ambassador22x", "Yoo2",
+               "kiril360", "Nikolabus", "andruhinby",
+               "masterjorj", "andruhinby", "maximbaty58655865"]
+
 sell_list = "https://localbitcoins.net/ru/buy-bitcoins-online/byn/"
 url = sell_list
 proxy_logpas = '//user39773:rdwa08@'
 url2 = 'https://httpbin.org/ip'
 time_sleep = 0
+MyMess = {u'msg': '''Салют!!!'''}
