@@ -17,9 +17,9 @@ def start(proxy, tm):
 def start1(tm):
 
     while True:
-        r = tm.rr()
+        r = dict.copy(tm.rr())
         if r is None:
             continue
         else:
-            print(r, end='\n\n')
-        time.sleep(0.2)
+            print(r, end='\n')
+        time.sleep(0.3)
