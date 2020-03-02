@@ -21,7 +21,8 @@ class Tm:
             list_price.clear()
             list_names.clear()
 
-            conf.time_sleep = (conf.time_sleep + time) / 2
+            conf.av_times_list.append(time)
+
 
     def rr(self):
         with self.lock:

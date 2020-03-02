@@ -45,7 +45,7 @@ def first_mess():
                 d1 = str('/api/notifications/mark_as_read/' + d + '/')
                 k = str(e['contact_id'])  # id сделки
                 k1 = str('/api/contact_message_post/' + k + '/')
-
+                
                 # Mess_2 = 'Contact #' + k + ' payment marked complete'
 
                 if 'Вы получили новое предложение' in s:
