@@ -5,20 +5,22 @@ import threading
 import conf
 import api
 import API_keys
-
+'''
+    Методы для фабрики потоков 
+'''
 
 def start(proxy, tm):
-    t_1 = datetime.now()
+
+    # поток получения реквеста через прокси
     s = requests.Session()
     s.proxies = {'https': conf.proxy_logpas + proxy}
     r = s.get(conf.url).text
     s.close()
-    t_2 = datetime.now()
-    time = t_2 - t_1
-    tm.a(time.microseconds / 1000000, r)
+    tm.a(r)
 
 
 def start1(tm):
+    # поток измения моей цены
     while True:
         for proxy in conf.proxy1:
             r = dict.copy(tm.rr())
@@ -47,6 +49,7 @@ def start1(tm):
 
 
 def first_mess():
+    # поток отправки первого сообщения
     conn = api.hmac(API_keys.hmac_key, API_keys.hmac_secret)
     n = None
     while True:
@@ -56,14 +59,13 @@ def first_mess():
             print(e)
 
         for i, e in reversed(list(enumerate(n))):
+
             if e['read'] == False:
                 s = e['msg']  # тело сообщения
                 d = str(e['id'])  # id сообщения
-                d1 = str('/api/notifications/mark_as_read/' + d + '/')
+                d1 = str('/api/notifications/mark_as_read/' + d + '/') # api ключ
                 k = str(e['contact_id'])  # id сделки
                 k1 = str('/api/contact_message_post/' + k + '/')
-
-                # Mess_2 = 'Contact #' + k + ' payment marked complete'
 
                 if 'Вы получили новое предложение' in s:
                     print('есть сообщение!')
@@ -75,5 +77,5 @@ def first_mess():
                     # logging.info('Реквизиты отправлены. ID сделки: ' + k)
                     continue
                     '''
-        time.sleep(3)
+        time.sleep(4)
         print('идем далше')
