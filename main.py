@@ -14,7 +14,7 @@ if __name__ == '__main__':
         while True:
             for pr in conf.proxy:
                 pool.submit(threads_methods.start, pr, tm)
-                time.sleep(0.2)
+                time.sleep(0.4)
 
 
 

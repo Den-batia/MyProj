@@ -6,6 +6,7 @@ import conf
 import api
 import API_keys
 
+
 def start(proxy, tm):
     t_1 = datetime.now()
     s = requests.Session()
@@ -17,18 +18,34 @@ def start(proxy, tm):
     tm.a(time.microseconds / 1000000, r)
 
 
-
 def start1(tm):
     while True:
-        r = dict.copy(tm.rr())
-        if r is None:
-            continue
-        else:
-            print(r, end='\n')
-        time.sleep(0.3)
+        for proxy in conf.proxy1:
+            r = dict.copy(tm.rr())
+
+            list_l = []
+            if r is None:
+                continue
+            else:
+                for trader in r.keys():
+                    if trader in conf.list_ignore or float(r[trader]) < conf.Low:
+                        continue
+                    else:
+                        list_l.append(r[trader])
+                if len(list_l) > 0:
+                    print(proxy, end="  ")
+                    min_price = float(list_l[0])
+                    my_new_price = str(round(min_price - conf.X, 2))
+                    params = {u'price_equation': my_new_price}
+                    try:
+                        a = api.hmac(API_keys.hmac_key, API_keys.hmac_secret, proxy={'https':conf.proxy_logpas + proxy}).call('POST', conf.Me_3, params).json()
+                        print(a)
+                    except Exception as e:
+                        print(e)
 
 
-    
+
+
 def first_mess():
     conn = api.hmac(API_keys.hmac_key, API_keys.hmac_secret)
     n = None
@@ -45,7 +62,7 @@ def first_mess():
                 d1 = str('/api/notifications/mark_as_read/' + d + '/')
                 k = str(e['contact_id'])  # id сделки
                 k1 = str('/api/contact_message_post/' + k + '/')
-                
+
                 # Mess_2 = 'Contact #' + k + ' payment marked complete'
 
                 if 'Вы получили новое предложение' in s:
