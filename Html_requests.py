@@ -1,9 +1,6 @@
 import threading
-import re
-import conf
 '''
-    Синхро женерик клаcс, получает реквесты с фабри потоков(синхронно),
-    парсит, получает словарь ник:текущая цена. Словарь не отсортирован.
+    Синхро женерик клаcс, получает словарь с фабри потоков(синхронно).
     Также синхронно возвращает словать в отдельный поток изменения цены.
 '''
 
@@ -14,20 +11,11 @@ class Tm:
         self.r = {}
 
     def a(self, r):
-        global time_sleep
-
         with self.lock:
             if self.r is not None:
                 self.r.clear()
-            # список текущих цен
-            list_price = re.findall(r'<td class="column-price">\s*\W*(\d{2}\D\d{3}\D\d{2})', r)
-            # список текущих имен
-            list_names = re.findall(r'<a href="/accounts/profile/(\w*)', r)
-            # словарь имя:цена
-            self.r = {list_names[name]: str(list_price[name]).replace(',', '') for name in range(len(list_price))}
-            list_price.clear()
-            list_names.clear()
-
+            self.r = r
+            
 
 
     def rr(self):

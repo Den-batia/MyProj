@@ -100,18 +100,17 @@ class Connection:
 
         # If HMAC
         elif self.hmac_key:
-
             # If nonce fails, retry several times, then give up
             for retry in range(10):
 
                 nonce = str(int(time.time() * 1000))
-
                 # Prepare request based on method.
                 if method == "POST":
                     api_request = requests.Request(
                         "POST", self.server + url, data=params, files=files
                     ).prepare()
                     params_encoded = api_request.body
+
 
                 # GET method
                 else:
