@@ -1,6 +1,7 @@
 from datetime import *
 import requests
 import time
+import datetime
 import re
 import threading
 import conf
@@ -10,9 +11,20 @@ import API_keys
 '''
     Методы для фабрики потоков 
 '''
+def q(q):
 
-
-def start(proxy, tm):
+    while True:
+        try:
+            a = q.get()
+            while not q.empty():
+                a = q.get()
+            print(a)
+            print(q.qsize())
+            time.sleep(1)
+        except Exception as e:
+            print(e)
+def start(proxy, q):
+    t0 = datetime.datetime.now()
     # поток получения реквеста через прокси
     s = requests.Session()
     s.proxies = {'https': conf.proxy1_logpas + proxy}
@@ -25,8 +37,8 @@ def start(proxy, tm):
     list_names = re.findall(r'<a href="/accounts/profile/(\w*)', r)
     # словарь имя:цена
     r = {list_names[name]: str(list_price[name]).replace(',', '') for name in range(len(list_price))}
-    tm.a(r)
-
+    # print(datetime.datetime.now()- t0)
+    q.put(r)
 
 def start1(tm):
     # поток измения моей цены
