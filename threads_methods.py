@@ -9,28 +9,25 @@ import api
 import API_keys
 
 '''
-    Методы для фабрики потоков 
+    Методы для фабрики потоков, процессов
 '''
 def q(q):
-
-    while True:
-        try:
+    try:
+        a = q.get()
+        while not q.empty():
             a = q.get()
-            while not q.empty():
-                a = q.get()
-            print(a)
-            print(q.qsize())
-            time.sleep(1)
-        except Exception as e:
-            print(e)
+        return a
+    except Exception as e:
+        print(e)
+
 def start(proxy, q):
     t0 = datetime.datetime.now()
     # поток получения реквеста через прокси
     s = requests.Session()
-    s.proxies = {'https': conf.proxy1_logpas + proxy}
+    s.proxies = {'https': conf.proxy_logpas + proxy}
     r = s.get(conf.url).text
     s.close()
-    del s
+    # del s
     # список текущих цен
     list_price = re.findall(r'<td class="column-price">\s*\W*(\d{2}\D\d{3}\D\d{2})', r)
     # список текущих имен
@@ -40,13 +37,13 @@ def start(proxy, q):
     # print(datetime.datetime.now()- t0)
     q.put(r)
 
-def start1(tm):
+def start1(queue):
     # поток измения моей цены
 
     while True:
         for proxy in range(len(conf.proxy)):
             pr = conf.proxy[proxy]
-            r = dict.copy(tm.rr())
+            r = q(queue)
             list_l = []
             if r is None:
                 continue
