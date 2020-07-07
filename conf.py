@@ -44,8 +44,8 @@ Low = 11000  # Нижняя граница при Продаже
 Hight = 16500 # Верхняя граница при покупке
 url = "https://localbitcoins.net/ru/buy-bitcoins-online/byn/"
 url_2 = 'https://localbitcoins.com/ru/sell-bitcoins-online/byn/'
-proxy_logpas = '//vcgk8z:Xqk7TB@'  # пароль прокси
-proxy1_logpas = '//8znoMH:qo0zbd@'
+proxy_logpas = ''  # пароль прокси
+proxy1_logpas = ''
 url2 = 'https://httpbin.org/ip'
 
 MyMess = {u'msg': '''Салют!!!'''}  # текст первого сообщения
