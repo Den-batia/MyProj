@@ -1,7 +1,7 @@
-#mac_key = "148971a0086e905de49977027869bd0f"
-#mac_secret = "c07c9b146bdceee8701ce21a277bf2c17dc6c1724e5c617877bfdef44b7516bc"
+#mac_key = ""
+#mac_secret = ""
 
-hmac_key = "09ae7273c68b066e4005c82bac25a79a"
-hmac_secret = "5081403cc05c9ed94c9c8cac1ce7746c2d35a8b0d46ab64b9ab81d3f96ee2f5a"
+hmac_key = ""
+hmac_secret = ""
 
 
